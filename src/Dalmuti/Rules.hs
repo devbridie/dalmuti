@@ -51,4 +51,7 @@ makePlayers amount deck = map (\hand -> Player hand Pending) (deal amount deck)
 playGroup :: Group -> GameState -> GameState
 playGroup group (GameState hands _) = GameState hands (Just group)
 
+hand :: Player -> Hand
+hand (Player hand _) = hand
+
 testGame = GameState (makePlayers 5 standardDeck) Nothing

@@ -21,6 +21,8 @@ description:         Haskell implementation of the card game The Great Dalmuti
 dependencies:
 - base >= 4.7 && < 5
 - split
+- monad-loops
+- random-shuffle
 
 library:
   source-dirs: src
