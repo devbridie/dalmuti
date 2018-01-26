@@ -42,6 +42,9 @@ groupsNoJoker hand = nub
   $ filter (not . null)
   $ concatMap subsequences (group $ sort hand)
 
+removeGroupFromHand :: Group -> Hand -> Hand
+removeGroupFromHand group hand = hand \\ groupToCards group
+
 deal :: Int -> Deck -> [Hand]
 deal players deck = transpose $ chunksOf players deck
 
