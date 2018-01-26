@@ -15,7 +15,7 @@ canPlayGroupOn (Group card amount) Nothing = True
 canPlayGroupOn (Group card amount) (Just (Group currentCard currentAmount)) = card < currentCard && amount == currentAmount
 
 playableGroups :: Hand -> Pile -> [Group]
-playableGroups hand pile = filter (`canPlayGroupOn` pile) $ largestGroups hand
+playableGroups hand pile = filter (`canPlayGroupOn` pile) $ groups hand
 
 createGroup :: [Card] -> Group
 createGroup cards = Group (head cards) (length cards) -- TODO: needs some verification
