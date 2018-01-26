@@ -1,0 +1,6 @@
+.stack-work/
+dalmuti.cabal
+*~
+
+.idea
+*.iml
