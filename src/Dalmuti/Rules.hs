@@ -1,3 +1,4 @@
+{-# LANGUAGE LambdaCase #-}
 module Dalmuti.Rules where
 import Dalmuti.Types
 import Data.List
@@ -25,14 +26,21 @@ createGroup cards
 groupToCards :: Group -> [Card]
 groupToCards (Group card amount) = replicate amount card
 
-largestGroups :: Hand -> [Group]
-largestGroups hand = map createGroup $ group $ sort hand
-
 groups :: Hand -> [Group]
-groups hand = nub
+groups hand = g where
+  (jokers, noJokers) = partition (== Joker) hand
+  groupsWithoutJoker = groupsNoJoker noJokers
+  g = addJokersToGroups (length jokers) groupsWithoutJoker
+
+addJokersToGroups :: Int -> [Group] -> [Group]
+addJokersToGroups 0 group = group
+addJokersToGroups amount group = addJokersToGroups (amount - 1) (group ++ map (\case Group card amount -> Group card (amount + 1)) group)
+
+groupsNoJoker :: Hand -> [Group]
+groupsNoJoker hand = nub
   $ map createGroup
   $ filter (not . null)
-  $ concatMap (subsequences . groupToCards) (largestGroups hand)
+  $ concatMap subsequences (group $ sort hand)
 
 deal :: Int -> Deck -> [Hand]
 deal players deck = transpose $ chunksOf players deck
