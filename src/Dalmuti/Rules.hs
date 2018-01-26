@@ -18,7 +18,9 @@ playableGroups :: Hand -> Pile -> [Group]
 playableGroups hand pile = filter (`canPlayGroupOn` pile) $ groups hand
 
 createGroup :: [Card] -> Group
-createGroup cards = Group (head cards) (length cards) -- TODO: needs some verification
+createGroup cards
+  | all (== head cards) cards = Group (head cards) (length cards)
+  | otherwise = error $ "Could not create group from " ++ show cards
 
 groupToCards :: Group -> [Card]
 groupToCards (Group card amount) = replicate amount card
